@@ -20,6 +20,6 @@ config = {
         "api_key": os.getenv("OPENAI_API_TG_KEY"),
     },
     "events": {
-        "url": "https://www.kclsu.org/events/",
+        "url": "https://www.kclsu.org",
     },
 }
