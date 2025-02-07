@@ -1,7 +1,12 @@
 # Smart Student Planner
 
-## Commands
-/start
-/help
-/setics https://...timetable.ics
-/today
+## Available Commands
+
+- **/start**  
+
+- **/help**  
+
+- **/setics <URL>**  
+  _Example:_ `/setics https://example.com/timetable.ics`
+
+- **/today**  
