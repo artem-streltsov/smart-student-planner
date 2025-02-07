@@ -1,6 +1,7 @@
 from .base import Base
 from .session import engine
 from .models.user import User
+from .models.lecture import Lecture
 
 
 def init_db():
