@@ -1,5 +1,6 @@
 from curl_cffi import requests
 from bs4 import BeautifulSoup
+from bot.config import config
 
 
 def get_events(url: str):
@@ -8,16 +9,22 @@ def get_events(url: str):
         impersonate="chrome120",
     )
     soup = BeautifulSoup(r.text)
-    parse_events(soup)
+    events = parse_events(soup)
+    return events
 
 
 def parse_events(soup: BeautifulSoup):
     # Limit to 50 events - covers next 10 days or so
     event_items = soup.find_all("div", class_="event_item")[:50]
+    events = []
     for event in event_items:
         event_time = event.find("dd", class_="msl_event_time").get_text(strip=True)
         event_name = event.find("a", class_="msl_event_name").get_text(strip=True)
         event_link = event.find("a", class_="msl_event_name")["href"]
+        event_link = config["events"]["url"] + event_link
+        event_location = event.find("dd", class_="msl_event_location").get_text(
+            strip=True
+        )
         event_description = event.find("dd", class_="msl_event_description").get_text(
             strip=True
         )
@@ -26,11 +33,14 @@ def parse_events(soup: BeautifulSoup):
         if event_types_dd:
             for a_tag in event_types_dd.find_all("a"):
                 event_types.append(a_tag.get_text(strip=True))
-        print(f"{event_name} - {event_link}")
-        print(f"    {event_time}")
-        print(f"    {event_description}")
-        print(f"    {', '.join(event_types)}")
-
-
-url = "https://www.kclsu.org/events/"
-get_events(url)
+        events.append(
+            {
+                "name": event_name,
+                "link": event_link,
+                "time": event_time,
+                "location": event_location,
+                "description": event_description,
+                "types": event_types,
+            }
+        )
+    return events
