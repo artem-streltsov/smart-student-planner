@@ -28,7 +28,7 @@ def get_event_time(url: str):
 
 def parse_events(soup: BeautifulSoup):
     # Limit to 50 events - covers next 10 days or so
-    event_items = soup.find_all("div", class_="event_item")[:1]
+    event_items = soup.find_all("div", class_="event_item")[:5]
     events = []
     for event in event_items:
         event_date = event.find("dd", class_="msl_event_time").get_text(strip=True)

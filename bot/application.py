@@ -26,9 +26,10 @@ application = ApplicationBuilder().token(config["telegram"]["api_key"]).build()
 
 application.add_handler(CommandHandler("start", start))
 application.add_handler(CommandHandler("help", help))
-application.add_handler(CommandHandler("setics", set_ics))
+application.add_handler(CommandHandler("set_ics", set_ics))
 application.add_handler(CommandHandler("today", today))
 application.add_handler(CommandHandler("events", events))
-application.add_handler(CommandHandler("studyplan", study_plan))
+application.add_handler(CommandHandler("study_plan", study_plan))
 
 application.add_handler(MessageHandler(filters.TEXT & (~filters.COMMAND), echo))
+application.add_handler(MessageHandler(filters.COMMAND, unknown))
